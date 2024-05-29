@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/symfony,terraform
 # Edit at https://www.toptal.com/developers/gitignore?templates=symfony,terraform
-
+# Application folder
+/app
 ### Symfony ###
 # Cache and logs (Symfony2)
 /app/cache/*
