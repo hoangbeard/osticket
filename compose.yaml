@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: osticket:v1.18.1
+    image: osticket-docker:v1.18.1
     container_name: web
     hostname: osticket
     restart: always
