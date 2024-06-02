@@ -38,6 +38,10 @@ cp ./app/include/ost-sampleconfig.php ./app/include/ost-config.php
 echo "Cleaning up temporary files..."
 rm -rf ./temp
 
+# Build the osTicket docker image
+echo "Building osTicket docker image..."
+docker build -t osticket-docker:v1.18.1 .
+
 # Run the osTicket docker-compose file
 docker compose up -d
 docker compose ps

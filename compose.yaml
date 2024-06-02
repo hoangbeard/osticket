@@ -1,10 +1,7 @@
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: osticket-docker:v1.18.1
-    container_name: web
+    container_name: webapp
     hostname: osticket
     restart: always
     ports:
@@ -15,10 +12,9 @@ services:
       - OSTICKET_DB_PASSWORD=osticketpass
       - OSTICKET_DB_NAME=osticket
   db:
-    image: mysql:8.0.27
+    image: mysql:lts
     container_name: db
     hostname: mysql-db
-    command: "--default-authentication-plugin=mysql_native_password"
     volumes:
       - db_data:/var/lib/mysql
     restart: always
