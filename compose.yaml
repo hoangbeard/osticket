@@ -1,6 +1,6 @@
 services:
   web:
-    image: osticket-docker:v1.18.1
+    image: osticket-docker:apache
     container_name: webapp
     hostname: osticket
     restart: always

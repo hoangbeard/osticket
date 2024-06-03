@@ -7,14 +7,24 @@ install:
 	@chmod +x install.sh
 	@./install.sh
 
-stop:
-	@echo "Stopping..."
-	@docker compose stop
+build:
+	@echo "Building osTicket docker image..."
+	@docker build -f apache.Dockerfile -t osticket-docker:apache .
+
+build-start:
+	@echo "Building osTicket docker image..."
+	@docker build -f apache.Dockerfile -t osticket-docker:apache .
+	@docker compose up -d
 	@docker compose ps
 
 start:
 	@echo "Starting..."
 	@docker compose up -d
+	@docker compose ps
+
+stop:
+	@echo "Stopping..."
+	@docker compose stop
 	@docker compose ps
 
 clean-setup:
