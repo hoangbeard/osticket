@@ -1,36 +1,45 @@
 server {
     listen 80;
     # server_name yourdomain.com;
+
     root /var/www/html;
     index index.php index.html index.htm;
 
-    location /include {
+    location ~ /include {
         deny all;
         return 403;
     }
 
+    if ($request_uri ~ "^/api(/[^\?]+)") {
+        set $path_info $1;
+    }
+
+    location ~ ^/api/(?:tickets|tasks|auth).*$ {
+        try_files $uri $uri/ /api/http.php?$query_string;
+    }
+
+    if ($request_uri ~ "^/scp/.*\.php(/[^\?]+)") {
+        set $path_info $1;
+    }
+
+    location ~ ^/scp/ajax.php/.*$ {
+        try_files $uri $uri/ /scp/ajax.php?$query_string;
+    }
+
+    if ($request_uri ~ "^(/.*)") {
+        set $path_info $1;
+    }
+
     location / {
         try_files $uri $uri/ index.php;
-        location ~ ^/api/(?:tickets|tasks|auth).*$ {
-            try_files $uri $uri/ /api/http.php?$query_string;
-        }
-        location ~ ^/scp/ajax.php/.*$ {
-            try_files $uri $uri/ /scp/ajax.php?$query_string;
-        }
-        location ~ ^/api/(?!http.php/)(.*) {
-            try_files $uri $uri/ /api/http.php/$1;
-        }
-        location ~ ^/pages/(?!index.php/)(.*) {
-            try_files $uri $uri/ /pages/index.php/$1;
-        }
-        location ~ ^(.*[^/]\.php)(/|$) {
-            include fastcgi_params;
-            fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-            fastcgi_pass unix:/var/run/app-php-fpm.sock;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            fastcgi_param PATH_INFO $fastcgi_path_info;
-        }
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/app-php-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $path_info;
+        include fastcgi_params;
     }
 
     # Logging settings
