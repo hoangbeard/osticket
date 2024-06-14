@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=symfony,terraform
 # Application folder
 /app
+/osticket_data
 ### Symfony ###
 # Cache and logs (Symfony2)
 /app/cache/*

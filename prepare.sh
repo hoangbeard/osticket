@@ -33,6 +33,7 @@ cp -r ./temp/*.phar ./app/include/plugins/
 # Copy the sample configuration file to create a new configuration file
 echo "Creating new configuration file from sample..."
 cp ./app/include/ost-sampleconfig.php ./app/include/ost-config.php
+chmod 0666 ./app/include/ost-config.php
 
 # Remove the temporary directory and all its contents
 echo "Cleaning up temporary files..."
